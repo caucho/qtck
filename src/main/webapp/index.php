@@ -49,7 +49,6 @@ function __autoload($name)
 /* basic framework */
 require($_SERVER["DOCUMENT_ROOT"]."WEB-INF/config.inc.php");
 require($_SERVER["DOCUMENT_ROOT"]."WEB-INF/framework/connect.inc.php");
-require($_SERVER["DOCUMENT_ROOT"]."WEB-INF/mappings.php");
 
 
 if(!DB_CONNECTED)
