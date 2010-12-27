@@ -1,0 +1,18 @@
+    .success { background-color: #0f0; }
+    .failure { background-color: #f00; }
+    .center { text-align: center; }
+    h1, h2 {color: #990033; font-family: Helvetica,Arial,sans-serif; }
+
+    h1 { font-size: 150%; border-bottom: 1px solid #FAB41D; }
+    h2 {font-size: 125%;}
+    table, tbody td {border: 1px solid #903;}
+    table { min-width: 800px;}
+    td { border-width: 0 0 1px 0; padding: 3px;}
+    thead td { font-weight: bold; }
+
+    pre { white-space: pre;}
+
+    .infobox p {display:block; margin: 3px; border-bottom: 1px solid #903; width: 800px;}
+    .infobox p label { display: inline-block; width: 250px; margin-right: 30px; border-right: 1px solid #903; }
+    .successBar { width: 800px; height: 25px; display: block; border: 2px solid black;}
+    .successBar div { height: 25px; line-height: 25px; display: inline-block; text-align:center; vertical-align: top; color: #fff; font-weight: bold;}
