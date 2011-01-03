@@ -1,0 +1,18 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+*       /                                       module:secure
+
+# Home page
+GET     /                                       Application.index
+
+GET     /testruns/create                        TestRunCreateController.createForm
+POST    /testruns/create                        TestRunCreateController.create
+
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}
