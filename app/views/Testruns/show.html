@@ -1,0 +1,56 @@
+#{extends 'main.html' /}
+#{set title:"Testruns #" + testrun.id /}
+<table>
+
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>Vendor</td>
+        <td>Product</td>
+        <td>Version</td>
+        <td>CreationDate</td>
+        <td>Completed?</td>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+        <td>#{a @Testruns.show(testrun.id)}${testrun.id}#{/a}</td>
+        <td>${testrun.vendor}</td>
+        <td>${testrun.product}</td>
+        <td>${testrun.version}</td>
+        <td>${testrun.creationDate.format("yyyy-MM-dd k:mm")}</td>
+        <td>${testrun.completed}</td>
+    </tr>
+
+
+    </tbody>
+</table>
+
+#{if testrun.member.email == session["username"]}
+<div style="background-color: #eee; border: 1px dashed #000; margin: 15px;">
+    To start this testrun, please open a (bash-)shell, point it to a folder of your
+    choice and execute the following command:
+    <pre style="margin-left: 3em;">
+curl @@{Testruns.testscript(testrun.uuid)} | bash
+    </pre>
+    or manually #{a @Testruns.testscript(testrun.uuid)}download the testrun script#{/a}
+</div>
+#{/if}
+
+
+
+<ul>
+    #{if testrun.member.email == session["username"]}
+    <li>
+        #{a @Testruns.testscript(testrun.uuid)}Download testrun script#{/a}
+    </li>
+    #{/if}
+    <li>
+        #{a @Testruns.index()}List all Testruns#{/a}
+    </li>
+    <li>
+        #{a @TestRunCreateController.create()}Create a Testrun#{/a}
+    </li>
+</ul>
+

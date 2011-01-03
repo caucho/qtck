@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/qtck.css'}">
+        #{get 'moreStyles' /}
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        <script src="@{'/public/javascripts/jquery-1.4.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+        #{get 'moreScripts' /}
+    </head>
+    <body>
+
+    #{ifnot session["username"]}
+        <a href="@@{Secure.login}">Login</a>
+    #{/ifnot}
+    #{else}
+    <div>
+        Logged in as: ${session["username"]}<br/>
+        <a href="@{Secure.logout()}">Logout</a>
+
+        #{a @@Testruns.index()}Testruns#{/a}
+        <a href="@@{Application.index()}>">Home</a>
+
+
+    </div>
+    #{/else}
+
+    <h1>Quercus Compatibility Matrix</h1>
+        #{doLayout /}
+    </body>
+</html>

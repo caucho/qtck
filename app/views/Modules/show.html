@@ -1,0 +1,85 @@
+#{extends 'main.html' /}
+#{set title:module.name /}
+
+
+<h2>${module.name}</h2>
+
+    <b>Info</b>:
+<div class="infobox">
+    <p>
+        <label for="module_id">ID</label> <input type="text" id="module_id" value="${module.id}"/>
+    </p>
+    <p>
+        <label for="module_name">Name</label> <input type="text" id="module_name" value="${module.name}"/>
+    </p>
+    <p>
+        <label for="module_shortname">ShortName</label> <input type="text" id="module_shortname" value="${module.shortname}"/>
+    </p>
+    <p>
+        <label for="module_deprecated">Deprecated?</label> <input type="checkbox" id="module_deprecated" #{if module.deprecated } checked="checked" #{/if} />
+    </p>
+    <p>
+        <label for="module_testscript_bash">Testscript Bash</label> <input type="text" id="module_testscript_bash" value="@@{Modules.generateTestScript(module.id)}" />
+    </p>
+</div>
+
+<h2>Constants</h2>
+    Success: ${constantsSuccessCount}<br/>
+    Failures: ${constantsFailureCount}<br/>
+    Success-Rate: ${constantsSuccessRate} %<br/>
+
+<div class="successBar">
+    <div class="success" style="width: ${constantsSuccessRate}%; ">${constantsSuccessRate}%</div><div class="failure" style="width: ${ 100-Math.round(constantsSuccessRate)}%; ">#{if constantsSuccessRate < 90}${100 - Math.round(constantsSuccessRate)}% #{/if}</div>
+</div>
+
+    <table>
+        <thead>
+        <tr>
+            <td>Constant Name</td>
+            <td>defined?</td>
+            <td>default value</td>
+            <td>actual value</td>
+        </tr>
+        </thead>
+        <tbody>
+
+        #{list items:constants, as:'constant'}
+        <tr>
+            <td>${constant.name}</td>
+            <td>#{if constantStatus.get(constant.name)} yes #{/if} #{else} no #{/else}</td>
+            <td>${constant.defaultvalue}</td>
+            <td class="#{if constantStatus.get(constant.name)} success #{/if} #{else} failure #{/else}">${constantValues[constant.name]}</td>
+        </tr>
+        #{/list}
+        </tbody>
+    </table>
+
+
+<h2>Functions</h2>
+    Success: ${functionsSuccessCount}<br/>
+    Failures: ${functionsFailureCount}<br/>
+    Success-Rate: ${functionsSuccessRate}%<br/>
+
+<div class="successBar">
+    <div class="success" style="width: ${ Math.round(functionsSuccessRate) }%; ">#{if functionsSuccessRate > 10} ${Math.round(functionsSuccessRate)}%#{/if}</div><div class="failure" style="width: ${100-Math.round(functionsSuccessRate)}%; ">#{if functionsSuccessRate < 90}${100-Math.round(functionsSuccessRate)}% #{/if}</div></div>
+
+
+        <table border="1">
+        <thead>
+        <tr>
+            <td>Function Name</td>
+            <td>exists?</td>
+            <td>TestCode</td>
+        </tr>
+        </thead>
+        <tbody>
+
+        #{list items:functions, as:'func'}
+        <tr>
+            <td><a href="http://de.php.net/manual/en/function.${func.shortname}.php" target="_blank">${func.name}</a></td>
+            <td class="#{if functionStatus[func.name]}success#{/if}#{else}failure#{/else}">#{if functionStatus[func.name]}yes#{/if}#{else}no#{/else}</td>
+            <td><a href="@{Functions.testCode(func.id)}" target="_blank">Testcode</a></td>
+        </tr>
+        #{/list}
+        </tbody>
+    </table>

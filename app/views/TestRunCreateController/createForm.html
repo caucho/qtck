@@ -1,0 +1,31 @@
+#{extends 'main.html' /}
+#{set title:"Create a testrun" /}
+
+#{form @TestRunCreateController.create(), id:'testrunCreateForm', enctype:'multipart/form-data' }
+
+#{field 'testrun.vendor'}
+<p>
+  <label>&{field.name}</label>
+  <input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+  <span class="error">${field.error}</span>
+</p>
+#{/field}
+
+#{field 'testrun.product'}
+<p>
+  <label>&{field.name}</label>
+  <input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+  <span class="error">${field.error}</span>
+</p>
+#{/field}
+
+#{field 'testrun.version'}
+<p>
+  <label>&{field.name}</label>
+  <input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+  <span class="error">${field.error}</span>
+</p>
+#{/field}
+
+<input type="submit" value="submit" />
+#{/form}

@@ -1,0 +1,40 @@
+#{extends 'main.html' /}
+#{set title:'QTCK' /}
+
+<h2>Overview</h2>
+
+<table>
+    <thead>
+    <tr>
+        <td rowspan="2">Module name</td>
+        <td rowspan="2" align="center">Zend <br/>PHP 5.3.3</td>
+        <td colspan="5" align="center">Quercus</td>
+        <td colspan="2" align="center">Testscripts</td>
+
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>Download</td>
+        <td>Run</td>
+    </tr>
+    </thead>
+    <tbody>
+    #{list items:modules, as:'module'}
+            <tr>
+                <td><a href='@@{Modules.show(module.id)}'>${module.name}</a></td>
+                <td class="success">100%</td>
+                <td class="failure">0%</td>
+                <td class="failure">0%</td>
+                <td class="failure">0%</td>
+                <td class="failure">0%</td>
+                <td class="failure">0%</td>
+                <td><a href="@@{Modules.downloadTestScript(module.id)}">Download</a></td>
+                <td><a href="@@{Modules.runTestScript(module.id)}">Run</a></td>
+            </tr>
+    #{/list}
+    </tbody>
+</table>

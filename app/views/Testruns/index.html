@@ -1,0 +1,31 @@
+#{extends 'main.html' /}
+#{set title:"Testruns" /}
+
+<table>
+
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>Vendor</td>
+        <td>Product</td>
+        <td>Version</td>
+        <td>Completed</td>
+        <td>Details</td>
+    </tr>
+    </thead>
+    <tbody>
+
+    #{list items:testRuns, as:'test'}
+    <tr>
+        <td>#{a @Testruns.show(test.id)}${test.id}#{/a}</td>
+        <td>${test.vendor}</td>
+        <td>${test.product}</td>
+        <td>${test.version}</td>
+        <td>${test.completed}</td>
+        <td>#{a @Testruns.show(test.id)}Show#{/a}</td>
+    </tr>
+
+    #{/list}
+    </tbody>
+</table>
+<a href="@{TestRunCreateController.create(null)}">Create a Testrun</a>
