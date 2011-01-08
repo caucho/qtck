@@ -37,4 +37,6 @@ fi;
 
 echo "|--------------------------------OTHER---------------------------------|"
 echo $ID >> OTHER_${TYPE}.result
+mv modules/${MODULE_NAME}/completed/${TYPE}_${ID}_stdout.txt OTHER_RESULTS/${TYPE}_${ID}_stdout.txt
+mv modules/${MODULE_NAME}/completed/${TYPE}_${ID}_stderr.txt OTHER_RESULTS/${TYPE}_${ID}_stderr.txt
 

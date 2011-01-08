@@ -1,0 +1,123 @@
+#{extends 'main.html' /}
+#{set title:"Testrun Details" /}
+
+
+<h2>TestRun #${testRun.id} Details</h2>
+
+<h3>Metadata</h3>
+<table>
+
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>Vendor</td>
+        <td>Product</td>
+        <td>Version</td>
+        <td>CreationDate</td>
+        <td>Completed?</td>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+        <td>${testRun.id}</td>
+        <td>${testRun.vendor}</td>
+        <td>${testRun.product}</td>
+        <td>${testRun.version}</td>
+        <td>${testRun.creationDate.format("yyyy-MM-dd k:mm")}</td>
+        <td>${testRun.completed}</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Results</h3>
+
+<table>
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>defined/exists?</td>
+    </tr>
+    </thead>
+    <tbody>
+    #{list modules, as :'module'}
+
+    <tr>
+        <td rowspan="2" style="padding-top: 1em;"><a href="#${module.id}">${module.name}</a></td>
+        <td>Functions: #{if functionSuccess.get(module.id)}
+            ${functionSuccess.get(module.id)[1]}: ${functionSuccess.get(module.id)[2]} / ${functionSuccess.get(module.id)[3]}
+        #{/if}</td>
+    </tr>
+    <tr>
+        <td>Constants:
+            #{if constantSuccess.get(module.id)}
+              ${constantSuccess.get(module.id)[1]}: ${constantSuccess.get(module.id)[2]} / ${constantSuccess.get(module.id)[3]}
+            #{/if}
+            </td>
+    </tr>
+
+    #{if functionPerModule.get(module.id)}
+    <tr>
+        <td colspan="4" style="padding-left: 2em;">Functions</a></td>
+    </tr>
+    #{list functionPerModule.get(module.id), as: 'result'}
+
+    <tr class="${result[4]?'success-light':'failure-light'}">
+
+        <td style='padding-left: 3em;'><a href="#${result[2]}">${result[3]}</a></td>
+        <td>${result[4]}</td>
+    </tr>
+
+    #{/list}
+    #{/if}
+
+    #{if constantPerModule.get(module.id)}
+    <tr>
+        <td colspan="4" style="padding-left: 2em;">Constants</a></td>
+    </tr>
+    #{list constantPerModule.get(module.id), as: 'result'}
+
+    <tr class="${result[4]?'success-light':'failure-light'}">
+
+        <td style='padding-left: 3em;'><a href="#${result[2]}">${result[3]}</a></td>
+        <td>${result[4]}</td>
+    </tr>
+
+    #{/list}
+    #{/if}
+
+    #{/list}
+
+    </tbody>
+</table>
+*{
+#{list modules, as: 'module'}
+
+<h4>Module: ${module.name}</h4>
+
+<h5>Constants</h5>
+<table>
+    <thead>
+    <tr>
+        <!--<td>ID</td>-->
+        <td>Name</td>
+        <td>Exists?</td>
+    </tr>
+    </thead>
+    <tbody>
+    #{list module.functions, as: 'function'}
+    <tr>
+        <td>${function.id}</td>
+
+    </tr>
+    #{/list}
+    </tbody>
+</table>
+
+<h5>Functions</h5>
+
+
+#{/list}
+}*
+
+${functionTests}

@@ -2,10 +2,7 @@ package models;
 
 import play.db.jpa.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -14,19 +11,27 @@ import java.util.Date;
  * dominik.dorn@tuwien.ac.at
  */
 @Entity
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"constant_id", "testrun_id"})
+})
 public class ConstantTest extends Model {
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     public Constant constant;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     public TestRun testRun;
 
     public boolean passed;
 
     @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(nullable = false)
     public Date creationDate;
 
-    public String result;
+    @Column(nullable = true)
+    public String stdOut;
+
+    @Column(nullable = true)
+    public String stdErr;
 
 }

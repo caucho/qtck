@@ -17,13 +17,18 @@ rm -Rf ${testRun.uuid}/
 mkdir ${testRun.uuid}
 cd ${testRun.uuid}
 
-echo "PHP=\"/usr/bin/php\"" >> settings.sh
+echo "ZEND_PHP=\"/usr/bin/php\"" >> settings.sh
+echo "RESIN_PATH=\"SET_PATH_HERE\"" >> settings.sh
+echo "QUERCUS_PHP=\"java -cp \$RESIN_PATH/lib/resin-kernel.jar:\$RESIN_PATH/lib/quercus.jar:\$RESIN_PATH/lib/resin.jar:\$RESIN_PATH/lib/mysql-connector-java-*-bin.jar com.caucho.quercus.CliQuercus \"" >> settings.sh
+echo "PHP=\"\$QUERCUS_PHP\"" >> settings.sh
 echo "UUID=\"${testRun.uuid}\"" >> settings.sh
 echo "SUBMITURL=\"@@{Testruns.submitTestResult}\"" >> settings.sh
+echo "SUBMITOTHERURL=\"@@{Testruns.submitOtherTestResult}\"" >> settings.sh
+echo "FINISHEDURL=\"@@{Testruns.markFinished}\"" >> settings.sh
 wget -q @@{'public/scripts/test_setup.sh'}
 
 chmod +x test_setup.sh
-./test_setup.sh
+#./test_setup.sh
 
 mkdir modules;
 cd modules;
@@ -51,6 +56,10 @@ chmod +x processTestResult.sh
 wget -q @@{'public/scripts/submitTestResults.sh'} -O submitTestResults.sh
 chmod +x submitTestResults.sh
 
+wget -q @@{'public/scripts/testrunFinished.sh'} -O markFinished.sh
+chmod +x markFinished.sh
+
+mkdir OTHER_RESULTS
 
 echo ""
 echo "Please adjust settings.sh to proper suit your setup."

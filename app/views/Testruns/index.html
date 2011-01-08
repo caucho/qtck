@@ -10,6 +10,7 @@
         <td>Product</td>
         <td>Version</td>
         <td>Completed</td>
+        <td>Overview</td>
         <td>Details</td>
     </tr>
     </thead>
@@ -23,6 +24,7 @@
         <td>${test.version}</td>
         <td>${test.completed}</td>
         <td>#{a @Testruns.show(test.id)}Show#{/a}</td>
+        <td>#{a @Testruns.detail(test.id)}Details#{/a}</td>
     </tr>
 
     #{/list}

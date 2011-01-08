@@ -2,10 +2,7 @@ package models;
 
 import play.db.jpa.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -14,12 +11,15 @@ import java.util.Date;
  * dominik.dorn@tuwien.ac.at
  */
 @Entity
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"function_id", "testrun_id"})
+})
 public class FunctionTest extends Model {
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     public Function function;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     public TestRun testRun;
 
     public boolean passed;
@@ -27,6 +27,7 @@ public class FunctionTest extends Model {
     @Temporal(value = TemporalType.TIMESTAMP)
     public Date creationDate;
 
-    public String result;
+    public String stdOut;
 
+    public String stdErr;
 }

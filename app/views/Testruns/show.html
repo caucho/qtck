@@ -27,7 +27,7 @@
     </tbody>
 </table>
 
-#{if testrun.member.email == session["username"]}
+#{if testrun.member.email == session["username"] && !testrun.completed}
 <div style="background-color: #eee; border: 1px dashed #000; margin: 15px;">
     To start this testrun, please open a (bash-)shell, point it to a folder of your
     choice and execute the following command:
@@ -40,12 +40,14 @@ curl @@{Testruns.testscript(testrun.uuid)} | bash
 
 
 
+
+
 <ul>
-    #{if testrun.member.email == session["username"]}
+    #{if testrun.completed}
     <li>
-        #{a @Testruns.testscript(testrun.uuid)}Download testrun script#{/a}
+        #{a @Testruns.detail(testrun.id)}Show Testrun Details#{/a}
     </li>
-    #{/if}
+#{/if}
     <li>
         #{a @Testruns.index()}List all Testruns#{/a}
     </li>

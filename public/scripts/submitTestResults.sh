@@ -14,10 +14,8 @@ echo "| Uploading Test Results                                                |"
 echo "|-----------------------------------------------------------------------|"
 #echo "| PHP:              $PHP";
 echo "| UUID:             $UUID";
-echo "| MODULE NAME:      $MODULE_NAME"
-echo "| TYPE:             $TYPE"
-echo "| ID:               $ID"
-#echo "| SUBMITURL:        $SUBMITURL"
+echo "| SUBMITURL:        $SUBMITURL"
+echo "| SUBMITOTHERURL:      $SUBMITOTHERURL"
 # // TODO do work here
 
 if [ -s SUCCESS_CONSTANT.result ]; then
@@ -32,7 +30,11 @@ fi;
 
 if [ -s OTHER_CONSTANT.result ]; then
     echo "Submitting Constant Other results"
-    curl -F uuid=$UUID -F testType=CONSTANTS -F resultType=OTHER   -F data=@OTHER_CONSTANT.result    $SUBMITURL
+    for ID in `cat OTHER_CONSTANT.result`; do
+        curl -F uuid=$UUID -F testType=CONSTANT -F id=$ID -F stdout=@OTHER_RESULTS/CONSTANT_${ID}_stdout.txt -F stderr=@OTHER_RESULTS/CONSTANT_${ID}_stderr.txt $SUBMITOTHERURL
+        echo ""
+    done;
+    #curl -F uuid=$UUID -F testType=CONSTANTS -F resultType=OTHER   -F data=@OTHER_CONSTANT.result    $SUBMITURL
 fi;
 
 if [ -s SUCCESS_FUNCTION.result ]; then
@@ -47,7 +49,17 @@ fi;
 
 if [ -s OTHER_FUNCTION.result ]; then
     echo "Submitting Function Other results"
+    for ID in `cat OTHER_FUNCTION.result`; do
+        curl -F uuid=$UUID -F testType=FUNCTION -F id=$ID -F stdout=@OTHER_RESULTS/FUNCTION_${ID}_stdout.txt -F stderr=@OTHER_RESULTS/FUNCTION_${ID}_stderr.txt $SUBMITOTHERURL
+        echo ""
+    done;
+
+
+    echo "Submitting Function Other results"
     curl -F uuid=$UUID -F testType=FUNCTIONS -F resultType=OTHER   -F data=@OTHER_FUNCTION.result    $SUBMITURL
 fi;
 
-
+echo "Your testresults have been published. "
+echo "If everything worked as expected, mark this testcase as completed, "
+echo "by executing: "
+echo "./markFinished.sh"
