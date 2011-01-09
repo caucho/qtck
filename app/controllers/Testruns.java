@@ -50,7 +50,7 @@ public class Testruns extends Controller {
 
         List<Module> modules = Module.findAll();
 
-        List<Object[]> functionTestResults = JPA.em().createNativeQuery("SELECT a.name as \"Module Name\", a.id as \"Module ID\", b.id as \"Function ID\", b.name as \"Function Name\", c.passed, (c.stdout is not null) as \"hasStdoutData\", (c.stderr is not null) as \"hasStdErrData\" FROM module a JOIN function b ON (b.module_id = a.id) LEFT JOIN functiontest c ON (c.function_id = b.id AND c.testrun_id = ?) order by a.id, b.name;")
+        List<Object[]> functionTestResults = JPA.em().createNativeQuery("SELECT a.name as \"Module Name\", a.id as \"Module ID\", b.id as \"Function ID\", b.name as \"Function Name\", c.passed, (c.stdout is not null) as \"hasStdoutData\", (c.stderr is not null) as \"hasStdErrData\", b.shortname FROM module a JOIN function b ON (b.module_id = a.id) LEFT JOIN functiontest c ON (c.function_id = b.id AND c.testrun_id = ?) order by a.id, b.name;")
                 .setParameter(1, id).getResultList();
 
         SortedMap<Long, ArrayList<Object>> functionPerModule = new TreeMap<Long, ArrayList<Object>>();

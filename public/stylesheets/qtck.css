@@ -26,3 +26,9 @@
     .failure td {
         color: #fff;
     }
+
+    tr.newModule td{
+        border-top: 3px solid black;
+        margin:0;
+    }
+

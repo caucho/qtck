@@ -21,7 +21,8 @@ public class Function extends Model {
     public String shortname;
     public String description;
 
-
+    public boolean isAlias;
+    public boolean isLanguageConstruct;
 
     public static List<Function> findByModule(Module m)
     {

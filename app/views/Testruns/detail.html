@@ -36,20 +36,21 @@
     <thead>
     <tr>
         <td>Name</td>
+        <td>Doc</td>
         <td>defined/exists?</td>
     </tr>
     </thead>
     <tbody>
     #{list modules, as :'module'}
 
-    <tr>
+    <tr class="newModule">
         <td rowspan="2" style="padding-top: 1em;"><a href="#${module.id}">${module.name}</a></td>
-        <td>Functions: #{if functionSuccess.get(module.id)}
+        <td colspan="2">Functions: #{if functionSuccess.get(module.id)}
             ${functionSuccess.get(module.id)[1]}: ${functionSuccess.get(module.id)[2]} / ${functionSuccess.get(module.id)[3]}
         #{/if}</td>
     </tr>
     <tr>
-        <td>Constants:
+        <td colspan="2">Constants:
             #{if constantSuccess.get(module.id)}
               ${constantSuccess.get(module.id)[1]}: ${constantSuccess.get(module.id)[2]} / ${constantSuccess.get(module.id)[3]}
             #{/if}
@@ -65,6 +66,7 @@
     <tr class="${result[4]?'success-light':'failure-light'}">
 
         <td style='padding-left: 3em;'><a href="#${result[2]}">${result[3]}</a></td>
+        <td><a href="http://us2.php.net/manual/en/function.${result[7]}.php">Doc</a></td>
         <td>${result[4]}</td>
     </tr>
 
@@ -78,9 +80,8 @@
     #{list constantPerModule.get(module.id), as: 'result'}
 
     <tr class="${result[4]?'success-light':'failure-light'}">
-
         <td style='padding-left: 3em;'><a href="#${result[2]}">${result[3]}</a></td>
-        <td>${result[4]}</td>
+        <td colspan="2">${result[4]}</td>
     </tr>
 
     #{/list}
